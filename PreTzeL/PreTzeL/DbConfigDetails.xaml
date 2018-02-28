@@ -1,0 +1,159 @@
+﻿<Window x:Class="PreTzeL.DbConfigDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PreTzeL"
+        mc:Ignorable="d"
+        Title="DbConfigDetails" Height="420" Width="320" WindowStyle="None" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="64*"/>
+            <RowDefinition Height="64*"/>
+            <RowDefinition Height="64*"/>
+            <RowDefinition Height="64*"/>
+            <RowDefinition Height="64*"/>
+            <RowDefinition Height="64*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="65*"/>
+            <ColumnDefinition Width="65*"/>
+            <ColumnDefinition Width="50*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="SERVER" FontFamily="Calibri" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" Foreground="#FF3D63A4"/>
+        <TextBlock Text="USERNAME" FontFamily="Calibri" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="6" Grid.Column="1" Grid.Row="3" Foreground="#FF3D63A4"/>
+        <TextBlock Text="DATABASE" FontFamily="Calibri" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="6" Grid.Column="1" Grid.Row="2" Foreground="#FF3D63A4"/>
+
+        <TextBox Name="textBox_username" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" TextChanged="textBox_username_TextChanged" />
+        <TextBlock Text="PASSWORD" FontFamily="Calibri" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="6" Grid.Column="1" Grid.Row="4" Foreground="#FF3D63A4"/>
+        <PasswordBox Name="textBox_Password" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" PasswordChanged="db_Password_PasswordChanged"/>
+
+        <TextBox Name="textBox_DataSource" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Grid.ColumnSpan="2" TextChanged="textBox_DataSource_TextChanged"/>
+        <TextBlock Text="PORT NO." FontFamily="Calibri" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="6" Grid.Column="1" Grid.Row="5" Foreground="#FF3D63A4"/>
+        <TextBox Name="textBox_PortNo" Grid.Row="5" Grid.Column="3" VerticalAlignment="Center" Grid.ColumnSpan="2" TextChanged="textBox_PortNo_TextChanged"/>
+        <Button Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="3" Content="CONNECT" VerticalAlignment="Center" Height="30" FontSize="12" Click="Button_Click">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="MinHeight" Value="25" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="FontSize" Value="10" />
+                    <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
+                    <Setter Property="Background" Value="LightBlue" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                    <Setter Property="Padding" Value="5,6" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="MouseOver">
+                                                <Storyboard>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MouseOverBorder">
+                                                        <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Pressed">
+                                                <Storyboard>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PressedBorder">
+                                                        <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Disabled">
+                                                <Storyboard>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="DisabledVisualElement">
+                                                        <SplineDoubleKeyFrame KeyTime="0" Value="0.7" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="contentPresenter">
+                                                        <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                        <VisualStateGroup x:Name="FocusStates">
+                                            <VisualState x:Name="Focused">
+                                                <Storyboard>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="FocusRectangle">
+                                                        <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="FocusInnerRectangle">
+                                                        <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Unfocused" />
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <Border x:Name="Background"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="Transparent"
+                                CornerRadius="3" />
+                                    <Rectangle x:Name="DisabledVisualElement"
+                                   Fill="{DynamicResource ControlsDisabledBrush}"
+                                   IsHitTestVisible="false"
+                                   Opacity="0"
+                                   RadiusY="3"
+                                   RadiusX="3" />
+                                    <Border x:Name="MouseOverBorder"
+                                Background="LightBlue"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="White"
+                                CornerRadius="3.5"
+                                Opacity="0" Margin="0,0,0,-1" />
+                                    <Border x:Name="PressedBorder"
+                                Background="Transparent"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3.5"
+                                Opacity="0" />
+                                    <Rectangle x:Name="FocusRectangle"
+                                   Stroke="Transparent"
+                                   RadiusY="4"
+                                   RadiusX="4"
+                                   Margin="-1"
+                                   Opacity="0" />
+                                    <Rectangle x:Name="FocusInnerRectangle"
+                                   StrokeThickness="1"
+                                   Stroke="#FF4E93A8"
+                                   RadiusX="3"
+                                   RadiusY="3"
+                                   Opacity="0" />
+                                    <ContentPresenter x:Name="contentPresenter"
+                                          RecognizesAccessKey="True"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <TextBox Name="textBox_DBName" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Grid.ColumnSpan="2" TextChanged="textBox_PortNo_TextChanged"/>
+        <Button Click="Button_Click_1"></Button>
+    </Grid>
+</Window>

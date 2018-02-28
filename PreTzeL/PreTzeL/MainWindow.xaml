@@ -1,0 +1,2193 @@
+﻿<Window x:Class="PreTzeL.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PreTzeL"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:Mahapps="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000" Loaded="Window_Loaded"
+        WindowStyle="None" ResizeMode="CanResizeWithGrip" AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen" x:Name="Main">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="ExpanderStyle1" TargetType="{x:Type Expander}">
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Expander}">
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3" SnapsToDevicePixels="True">
+                                <DockPanel>
+                                    <RadioButton GroupName="a" x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" DockPanel.Dock="Top" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                        <RadioButton.FocusVisualStyle>
+                                            <Style>
+                                                <Setter Property="Control.Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <Border>
+                                                                <Rectangle Margin="0" SnapsToDevicePixels="True" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </RadioButton.FocusVisualStyle>
+                                        <RadioButton.Style>
+                                            <Style TargetType="{x:Type RadioButton}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type RadioButton}">
+                                                            <Border Padding="{TemplateBinding Padding}">
+                                                                <Grid Background="Transparent" SnapsToDevicePixels="False">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="19"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <Ellipse x:Name="circle" Fill="White" HorizontalAlignment="Center" Height="19" Stroke="#FF333333" VerticalAlignment="Center" Width="19"/>
+                                                                    <Path x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="False" Stroke="#FF333333" StrokeThickness="2" VerticalAlignment="Center"/>
+                                                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="1" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+                                                                </Grid>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsChecked" Value="True">
+                                                                    <Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF5593FF"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFF3F9FF"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF3C77DD"/>
+                                                                    <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFD9ECFF"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsEnabled" Value="False">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FFBCBCBC"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFE6E6E6"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="#FF707070"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </RadioButton.Style>
+                                    </RadioButton>
+                                    <ContentPresenter x:Name="ExpandSite" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" DockPanel.Dock="Bottom" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </DockPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsExpanded" Value="True">
+                                    <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="ExpandDirection" Value="Right">
+                                    <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Right"/>
+                                    <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Left"/>
+                                    <Setter Property="Style" TargetName="HeaderSite">
+                                        <Setter.Value>
+                                            <Style TargetType="{x:Type RadioButton}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type RadioButton}">
+                                                            <Border Padding="{TemplateBinding Padding}">
+                                                                <Grid Background="Transparent" SnapsToDevicePixels="False">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="19"/>
+                                                                        <RowDefinition Height="*"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <Grid>
+                                                                        <Grid.LayoutTransform>
+                                                                            <TransformGroup>
+                                                                                <RotateTransform Angle="-90"/>
+                                                                            </TransformGroup>
+                                                                        </Grid.LayoutTransform>
+                                                                        <Ellipse x:Name="circle" Fill="White" HorizontalAlignment="Center" Height="19" Stroke="#FF333333" VerticalAlignment="Center" Width="19"/>
+                                                                        <Path x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="False" Stroke="#FF333333" StrokeThickness="2" VerticalAlignment="Center"/>
+                                                                    </Grid>
+                                                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Top"/>
+                                                                </Grid>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsChecked" Value="True">
+                                                                    <Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF5593FF"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFF3F9FF"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF3C77DD"/>
+                                                                    <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFD9ECFF"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsEnabled" Value="False">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FFBCBCBC"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFE6E6E6"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="#FF707070"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="ExpandDirection" Value="Up">
+                                    <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Top"/>
+                                    <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Bottom"/>
+                                    <Setter Property="Style" TargetName="HeaderSite">
+                                        <Setter.Value>
+                                            <Style TargetType="{x:Type RadioButton}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type RadioButton}">
+                                                            <Border Padding="{TemplateBinding Padding}">
+                                                                <Grid Background="Transparent" SnapsToDevicePixels="False">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="19"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <Grid>
+                                                                        <Grid.LayoutTransform>
+                                                                            <TransformGroup>
+                                                                                <RotateTransform Angle="180"/>
+                                                                            </TransformGroup>
+                                                                        </Grid.LayoutTransform>
+                                                                        <Ellipse x:Name="circle" Fill="White" HorizontalAlignment="Center" Height="19" Stroke="#FF333333" VerticalAlignment="Center" Width="19"/>
+                                                                        <Path x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="False" Stroke="#FF333333" StrokeThickness="2" VerticalAlignment="Center"/>
+                                                                    </Grid>
+                                                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="1" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+                                                                </Grid>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsChecked" Value="True">
+                                                                    <Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF5593FF"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFF3F9FF"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF3C77DD"/>
+                                                                    <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFD9ECFF"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsEnabled" Value="False">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FFBCBCBC"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFE6E6E6"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="#FF707070"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="ExpandDirection" Value="Left">
+                                    <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Left"/>
+                                    <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Right"/>
+                                    <Setter Property="Style" TargetName="HeaderSite">
+                                        <Setter.Value>
+                                            <Style TargetType="{x:Type RadioButton}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type RadioButton}">
+                                                            <Border Padding="{TemplateBinding Padding}">
+                                                                <Grid Background="Transparent" SnapsToDevicePixels="False">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="19"/>
+                                                                        <RowDefinition Height="*"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <Grid>
+                                                                        <Grid.LayoutTransform>
+                                                                            <TransformGroup>
+                                                                                <RotateTransform Angle="90"/>
+                                                                            </TransformGroup>
+                                                                        </Grid.LayoutTransform>
+                                                                        <Ellipse x:Name="circle" Fill="White" HorizontalAlignment="Center" Height="19" Stroke="#FF333333" VerticalAlignment="Center" Width="19"/>
+                                                                        <Path x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="False" Stroke="#FF333333" StrokeThickness="2" VerticalAlignment="Center"/>
+                                                                    </Grid>
+                                                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Top"/>
+                                                                </Grid>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsChecked" Value="True">
+                                                                    <Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF5593FF"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFF3F9FF"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF3C77DD"/>
+                                                                    <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFD9ECFF"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsEnabled" Value="False">
+                                                                    <Setter Property="Stroke" TargetName="circle" Value="#FFBCBCBC"/>
+                                                                    <Setter Property="Fill" TargetName="circle" Value="#FFE6E6E6"/>
+                                                                    <Setter Property="Stroke" TargetName="arrow" Value="#FF707070"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Name="Main_grid" Margin="0,0,0,0" Loaded="Main_grid_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="40*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="339*"/>
+            <ColumnDefinition Width="151*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="152*"/>
+            <ColumnDefinition Width="157*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="1" Grid.Column="5" Grid.RowSpan="5" BorderThickness="1,0,0,0" BorderBrush="LightGray">
+
+        </Border>
+        <StackPanel  Grid.Row="1" Grid.Column="5" Grid.RowSpan="5" Orientation="Vertical" Width="Auto">
+            <TextBlock Name="Details_TxtBox1" Padding="15,25,15,0" Width="auto" FontSize="13" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="Wrap" MinHeight="85"/>
+            <TextBlock Name="Details_TxtBox2" TextWrapping="Wrap" Foreground="Gray" Width="auto" Padding="15,0,15,0" Text = "{Binding Text}" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="66"/>
+            <TextBlock Name="Details_TxtBox3" TextWrapping="Wrap" Foreground="Black" Width="auto" Padding="15,25,15,0" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="66"/>
+            <TextBlock Name="Details_TxtBox4" TextWrapping="Wrap" Foreground="Gray" Width="auto" Padding="15,0,15,0" Text = "{Binding Text}" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="66"/>
+            <TextBlock x:Name="Details_TxtBox5" TextWrapping="Wrap" Foreground="Gray" Width="Auto" Padding="15,0,15,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,10,0,-120" MinHeight="66" FontSize="11"><Run Text="For still furthur queries feel free to ping us at:"/><LineBreak/><Run Text="Contact : support@falconautoonline.com"/></TextBlock>
+        </StackPanel>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Background="#FF006152" MouseDown="Border_MouseDown"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="PreTzel" Foreground="White" FontSize="18" VerticalAlignment="Center" Padding="40,0,0,0" FontWeight="DemiBold" MouseDown="TextBlock_MouseDown"/>
+        <Image Source="images/pretzel.jpg" Margin="10,5,0,5" Grid.Row="0" Grid.Column="1" Width="30" HorizontalAlignment="Left"></Image>
+        <Rectangle Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Transparent" Offset="0"/>
+                    <GradientStop Color="#FF00473C" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Mahapps:MetroAnimatedSingleRowTabControl BorderThickness="0,0,0,0" Margin="0,10,0,0" Name="Tab_Control" BorderBrush="Black" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="5" SelectionChanged="TabControl_SelectionChanged" TabStripPlacement="Left" KeyboardNavigation.DirectionalNavigation="Continue">
+
+            <TabItem x:Name="tab_Login" Background="Transparent" BorderBrush="Transparent">
+
+                <TabItem.Style>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="VerticalAlignment" Value="Bottom"/>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TabItem}">
+                                    <Grid>
+                                        <Border Name="Border">
+                                            <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header" Margin="12,2,12,2"/>
+                                        </Border>
+                                        <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                            <Image Name="image" Source="images/login.png" Width="23" Height="23" Stretch="Fill" Margin="7,0,0,0"/>
+                                            <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Admin Login" Margin="7,0,0,0" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Visible"/>
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter TargetName="Border" Property="BorderThickness" Value="3,0,0,0"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter Property="FontSize" Value="13"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Hidden"/>
+                                            <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                        </Trigger>
+                                        <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                        </Trigger>
+                                        <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabItem.Style>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="59*"/>
+                        <RowDefinition Height="59*"/>
+                        <RowDefinition Height="59*"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="59*"/>
+                        <RowDefinition Height="59*"/>
+                        <RowDefinition Height="57*"/>
+                        <RowDefinition Height="49*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="154*"/>
+                        <ColumnDefinition Width="222*"/>
+                        <ColumnDefinition Width="31*"/>
+                        <ColumnDefinition Width="135*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="#9db6d2" BorderThickness="1,0,0,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="8"></Border>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="ADMIN LOGIN" FontFamily="Calibri" Padding="50,0,0,0" FontSize="22" TextAlignment="Left" VerticalAlignment="Center" Height="26" Margin="0,17" Foreground="#FF6081BB"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Text="User Name" Padding="50,0,0,0" FontSize="17" TextAlignment="Left" VerticalAlignment="Center" Height="24" Margin="0,18"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1" Text="Password" Padding="50,0,0,0" FontSize="17" TextAlignment="Left" VerticalAlignment="Center" Height="24" Margin="0,18"/>
+                    <TextBox Name="textBox_username" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" MinHeight="35" FontSize="18" Margin="10,8,0,12" Foreground="#FF2572EB" Height="30" TextChanged="textBox_username_TextChanged"/>
+                    <PasswordBox Name="textBox_password" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" MinHeight="35" FontSize="18" Margin="10,8,0,12" Foreground="#FF2572EB" Height="30" PasswordChanged="textBox_password_PasswordChanged"/>
+                    <Button Name="btn_signup" Background="Transparent" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" VerticalAlignment="Top" Margin="0,0,0,0" Content="SIGN UP" Foreground="CornflowerBlue" BorderBrush="Transparent" Click="btn_signup_Click"/>
+                    <Button Name="btn_loginStatement" Background="Transparent" Grid.Row="4" Grid.Column="1" MinWidth="200" VerticalAlignment="Bottom" Margin="0,0,10,0" Content="Already a member? LOGIN" Foreground="Coral" BorderBrush="Transparent" Click="btn_loginStatement_Click"/>
+                    <Button Name="btn_login" Background="Transparent" Grid.Row="4" Grid.Column="1" MinWidth="200" VerticalAlignment="Top" Margin="0,0,10,0" Content="LOGIN" Foreground="CornflowerBlue" BorderBrush="Transparent" Visibility="Hidden" Click="btn_login_Click"/>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="tab_Action" Background="Transparent" BorderBrush="Transparent">
+                <TabItem.Style>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="VerticalAlignment" Value="Bottom"/>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TabItem}">
+                                    <Grid>
+                                        <Border Name="Border">
+                                            <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header" Margin="12,2,12,2"/>
+                                        </Border>
+                                        <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                            <Image Name="image" Source="images/action.png" Width="25" Height="25" Stretch="Fill" Margin="5,0,0,0"/>
+                                            <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Action" Margin="5,0,0,0" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Visible"/>
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter TargetName="Border" Property="BorderThickness" Value="3,0,0,0"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter Property="FontSize" Value="13"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Hidden"/>
+                                            <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                        </Trigger>
+                                        <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                        </Trigger>
+                                        <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabItem.Style>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="73*"/>
+                        <RowDefinition Height="73*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="74*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="73*"/>
+                        <RowDefinition Height="73*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="#9db6d2" BorderThickness="1,0,0,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="7"></Border>
+                    <Button Name="btn_CreateNewCustomer"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" Height="Auto" BorderBrush="Transparent" Click="btn_CreateNewCustomer_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Name="border" Background="#FF0078D7" BorderBrush="Transparent" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
+                                    <Grid >
+                                        <TextBlock Name="Normal" Text="Create New Customer" FontSize="14" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Metro" Opacity="1" Foreground="White" TextWrapping="Wrap" Padding="10"/>
+                                        <Grid Name="Hover" Opacity="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="10*"/>
+                                                <RowDefinition Height="10*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Row="0" Grid.Column="0" Name="Hover_img" Source="images/Create new Customer.png" Margin="5,10,5,0"/>
+                                            <TextBlock Name="hoverTExtblock" Text="Create New Customer" FontSize="13.5" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Metro"  Foreground="White" TextWrapping="Wrap" Padding="7,3,7,10" FontWeight="Thin" Grid.Row="1" Grid.ColumnSpan="3"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Resources>
+                                    <Storyboard x:Key="MouseEnterTimeLine">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Normal" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                    <Storyboard x:Key="MouseExitTimeLine">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Normal" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </ControlTemplate.Resources>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource MouseEnterTimeLine}"/>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard Storyboard="{StaticResource MouseExitTimeLine}"/>
+                                        </Trigger.ExitActions>
+                                        <Setter TargetName="border" Property="Background" Value="#FF008EFF"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Name="btn_ViewExistingCustomers" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" BorderBrush="Transparent" Background="#FF0078D7" Click="btn_additional_details_Click" Height="Auto">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="#FF0078D7" BorderBrush="Transparent" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
+                                    <Grid >
+                                        <TextBlock Name="Normal" Text="View Existing Customers" FontSize="14" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Metro" Opacity="1" Foreground="White" TextWrapping="Wrap" Padding="10"/>
+                                        <Grid Name="Hover" Opacity="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="10*"/>
+                                                <RowDefinition Height="10*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                                <ColumnDefinition Width="10*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Row="0" Grid.Column="0" Name="Hover_img" Source="images/Create new Customer.png" Margin="5,10,5,0"/>
+                                            <TextBlock Name="hoverTExtblock" Text="View Customers" FontSize="13.5" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Metro"  Foreground="White" TextWrapping="Wrap" Padding="7,3,7,10" FontWeight="Thin" Grid.Row="1" Grid.ColumnSpan="3"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Resources>
+                                    <Storyboard x:Key="MouseEnterTimeLine">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Normal" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                    <Storyboard x:Key="MouseExitTimeLine">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Normal" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </ControlTemplate.Resources>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource MouseEnterTimeLine}"/>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard Storyboard="{StaticResource MouseExitTimeLine}"/>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Name="btn_EditExistingCustomers" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" BorderBrush="Transparent" Background="#FF0078D7" Height="Auto">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="#FF0078D7" BorderBrush="Transparent" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
+                                    <Grid >
+                                        <TextBlock Name="Normal" Text="Edit Existing Customers" FontSize="14" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Metro" Opacity="1" Foreground="White" TextWrapping="Wrap" Padding="10"/>
+                                        <Image Name="Hover" Source="images/download.png" Opacity="0"/>
+                                        <Image Name="Pressed" Source="images/newCustomer.png" Opacity="0" />
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Resources>
+                                    <Storyboard x:Key="MouseEnterTimeLine">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Normal" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                    <Storyboard x:Key="MouseExitTimeLine">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Normal" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </ControlTemplate.Resources>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource MouseEnterTimeLine}"/>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard Storyboard="{StaticResource MouseExitTimeLine}"/>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Name="btn_ManageCustomersConfig" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="1" Height="Auto" BorderBrush="Transparent" Background="#FF0078D7">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="#FF0078D7" BorderBrush="Transparent" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
+                                    <Grid >
+                                        <TextBlock Name="Normal" Text="Manage Customer's Configurations" FontSize="14" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Metro" Opacity="1" Foreground="White" TextWrapping="Wrap" Padding="10"/>
+                                        <Image Name="Hover" Source="images/download.png" Opacity="0"/>
+                                        <Image Name="Pressed" Source="images/newCustomer.png" Opacity="0" />
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Resources>
+                                    <Storyboard x:Key="MouseEnterTimeLine">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Normal" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                    <Storyboard x:Key="MouseExitTimeLine">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Normal" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </ControlTemplate.Resources>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource MouseEnterTimeLine}"/>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard Storyboard="{StaticResource MouseExitTimeLine}"/>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Name="btn_DownloadCustomersConfig" Content="•	Download Customer's Configuration" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="1" Height="Auto" BorderBrush="Transparent" Background="#FF0078D7">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="#FF0078D7" BorderBrush="Transparent" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
+                                    <Grid >
+                                        <TextBlock Name="Normal" Text="Download Customer's Configuration" FontSize="14" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Metro" Opacity="1" Foreground="White" TextWrapping="Wrap" Padding="10"/>
+                                        <Image Name="Hover" Source="images/download.png" Opacity="0"/>
+                                        <Image Name="Pressed" Source="images/newCustomer.png" Opacity="0" />
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Resources>
+                                    <Storyboard x:Key="MouseEnterTimeLine">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Normal" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                    <Storyboard x:Key="MouseExitTimeLine">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="Normal" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </ControlTemplate.Resources>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="UIElement.IsMouseOver" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource MouseEnterTimeLine}"/>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard Storyboard="{StaticResource MouseExitTimeLine}"/>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <TextBlock Text="Choose An Action" FontFamily="Calibri" FontSize="22" TextAlignment="Left" VerticalAlignment="Center" Padding="50,10,0,0" Grid.ColumnSpan="2" Grid.Row="0" Height="51" Foreground="#FF6081BB" Grid.Column="0"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="tab_CreateNewCustomer" Background="Transparent" BorderBrush="Transparent" MinWidth="173">
+                <TabItem.Style>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="VerticalAlignment" Value="Bottom"/>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TabItem}">
+                                    <Grid>
+                                        <Border Name="Border">
+                                            <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header" Margin="12,2,12,2"/>
+                                        </Border>
+                                        <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                            <Image Name="image" Source="images/newCustomer.png" Width="25" Height="25" Stretch="Fill" Margin="5,0,0,0"/>
+                                            <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Create 𝛎 Customer" Margin="5,0,0,0" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Visible"/>
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter TargetName="Border" Property="BorderThickness" Value="3,0,0,0"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter Property="FontSize" Value="13"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Hidden"/>
+                                            <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                        </Trigger>
+                                        <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                        </Trigger>
+                                        <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabItem.Style>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="10*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="116*"/>
+                        <ColumnDefinition Width="115*"/>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="89*"/>
+                        <ColumnDefinition Width="19*"/>
+                        <ColumnDefinition Width="120*"/>
+                        <ColumnDefinition Width="34*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="#9db6d2" BorderThickness="1,0,0,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="14"></Border>
+                    <TextBlock Text="FILL CUSTOMER DETAILS" FontFamily="Calibri" FontSize="22" TextAlignment="Left" VerticalAlignment="Center" Padding="50,10,0,0" Grid.ColumnSpan="4" Height="52" Foreground="#FF6081BB" Grid.RowSpan="3"/>
+                    <TextBlock Text="Tool No." Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="50,7,0,7" FontSize="15" Height="20"/>
+                    <TextBlock Text="Customer Name" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" Margin="50,7,0,7" FontSize="15" Grid.ColumnSpan="2" Height="20"/>
+                    <TextBlock Text="Site Address" Grid.Column="0" Grid.Row="5" VerticalAlignment="Center" Margin="50,7,0,7" FontSize="15" Grid.ColumnSpan="2" Height="20"/>
+                    <TextBlock Text="Process Type" Grid.Column="0" Grid.Row="6" VerticalAlignment="Center" Margin="50,7,0,7" FontSize="15" Grid.ColumnSpan="2" Height="20"/>
+                    <TextBlock Text="Total Zones" Grid.Column="0" Grid.Row="8" VerticalAlignment="Center" Margin="50,7,0,7" FontSize="15" Grid.ColumnSpan="2" Height="20"/>
+                    <TextBlock Text="Max PTL In Zone" Grid.Column="0" Grid.Row="9" VerticalAlignment="Center" Margin="50,7,0,7" FontSize="15" Grid.ColumnSpan="2" Height="20"/>
+                    <TextBlock Text="Total PTL" Grid.Column="0" Grid.Row="10" VerticalAlignment="Center" Margin="50,7,0,7" FontSize="15" Grid.ColumnSpan="2" Height="20"/>
+                    <TextBlock Text="HHT" Grid.Column="0" Grid.Row="11" VerticalAlignment="Center" Margin="50,7,0,7" FontSize="15" Grid.ColumnSpan="2" Height="20"/>
+                    <TextBlock Text="License Key" Grid.Column="0" Grid.Row="12" VerticalAlignment="Center" Margin="50,7,0,7" FontSize="15" Grid.ColumnSpan="2" Height="20"/>
+                    <TextBox Name="textBox_toolno" Grid.Row="3" Margin="0,0,0,10" Grid.Column="2" Grid.ColumnSpan="2" CharacterCasing="Upper"/>
+                    <TextBox Name="textBox_customerName" Grid.Row="4" Grid.Column="2" Margin="0,0,0,10" Grid.ColumnSpan="2" CharacterCasing="Upper"/>
+                    <TextBox Name="textBox_SiteAddress" Grid.Row="5" Grid.Column="2" Margin="0,0,0,10" Grid.ColumnSpan="2" CharacterCasing="Upper"/>
+                    <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.Column="2" x:Name="toggle_CreateCustomerPickToLight" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB" Height="20" Width="20" Margin="0,7">
+                        <materialDesign:PackIcon Name="CreateCustomerPickToLight_PackIcon" Kind="Close" Foreground="#FF2572EB" Height="20" Width="20"/>
+                    </ToggleButton>
+                    <TextBlock Text="Pick To Light" Grid.Column="3" Grid.Row="6" VerticalAlignment="Center" FontSize="16" HorizontalAlignment="Left" Height="22" Margin="0,6" Width="88"/>
+                    <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="7" Grid.Column="2" x:Name="toggle_CreateCustomerPutToLight" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB" Height="20" Width="20" Margin="0,7">
+                        <materialDesign:PackIcon Name="CreateCustomerPutkToLight_PackIcon" Kind="Close" Foreground="#FF2572EB" Height="20" Width="20"/>
+                    </ToggleButton>
+                    <TextBlock Text="Put To Light" Grid.Column="3" Grid.Row="7" VerticalAlignment="Center" FontSize="16" HorizontalAlignment="Left" Height="22" Margin="0,6" Width="84"/>
+                    <TextBox Name="textBox_TotalZones" Grid.Row="8" Grid.Column="2" Margin="0,0,0,10" Grid.ColumnSpan="2" PreviewTextInput ="NumericOnly" />
+                    <TextBox Name="textBox_MaxPtl" Grid.Row="9" Grid.Column="2" Margin="0,0,0,10" Grid.ColumnSpan="2" PreviewTextInput ="NumericOnly" />
+                    <TextBox Name="textBox_TotalPtl" Grid.Row="10" Grid.Column="2" Margin="0,0,0,10" Grid.ColumnSpan="2" PreviewTextInput ="NumericOnly"/>
+                    <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="11" Grid.Column="2" x:Name="toggle_HHT" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB" Height="26" Width="25" Margin="0,4">
+                        <materialDesign:PackIcon Name="HHT_PackIcon" Kind="Close" Foreground="#FF2572EB"/>
+                    </ToggleButton>
+                    <DatePicker Name="datePicker_LicenseKey_from" Grid.Row="12" Grid.Column="2" VerticalAlignment="Bottom" Margin="0,0,0,5" SelectedDateFormat="Short" Grid.ColumnSpan="2" Height="29"/>
+                    <TextBlock Grid.Column="4" Grid.Row="12" Text="to" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11" Height="14" Margin="5,10,4,10" Width="10"/>
+                    <DatePicker Name="datePicker_LicenseKey_to" Grid.Row="12" Grid.Column="5" VerticalAlignment="Bottom" Margin="0,0,0,5" SelectedDateFormat="Short" Grid.ColumnSpan="1" Height="29"/>
+                    <Image Name="img_CustomerImage" Grid.Row="1" Grid.Column="5" Grid.RowSpan="3" Source="images/download.png" Margin="5,0,5,0"/>
+                    <Button Name="btn_BrowseImage" Grid.Row="4" Grid.Column="5" Content="Add Logo" Click="btn_BrowseImage_Click" Margin="5,1" BorderThickness="0" Background="Transparent" Foreground="#FF2572EB" Height="Auto"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tab_Congiguration" Background="Transparent" BorderBrush="Transparent">
+                <TabItem.Style>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="VerticalAlignment" Value="Bottom"/>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TabItem}">
+                                    <Grid>
+                                        <Border Name="Border">
+                                            <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header" Margin="12,2,12,2"/>
+                                        </Border>
+                                        <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                            <Image Name="image" Source="images/food-engineering-process.png" Width="25" Height="25" Stretch="Fill" Margin="5,0,0,0"/>
+                                            <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="PTL Congiguration" Margin="5,0,0,0" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Visible"/>
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter TargetName="Border" Property="BorderThickness" Value="3,0,0,0"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter Property="FontSize" Value="13"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Hidden"/>
+                                            <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                        </Trigger>
+                                        <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                        </Trigger>
+                                        <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabItem.Style>
+                <Grid>
+                    <Grid.Resources>
+                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="20*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="#9db6d2" BorderThickness="1,0,0,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="6"></Border>
+                    <TabControl HorizontalAlignment="Stretch" Grid.ColumnSpan="4" Grid.RowSpan="6" Width="Auto" x:Name="TabControl_Config" Template="{DynamicResource TabControlControlTemplate1}" IsSynchronizedWithCurrentItem="True" VerticalAlignment="Stretch" Height="Auto">
+                        <TabControl.Resources>
+                            <Style x:Key="TabScrollerRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Border Background="Transparent">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding ContentControl.Content}"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                            <ControlTemplate x:Key="TabControlControlTemplate1" TargetType="{x:Type TabControl}">
+                                <Grid x:Name="Grid" KeyboardNavigation.TabNavigation="Local">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition x:Name="ColumnDefinition0"/>
+                                        <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                                        <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="1" Grid.Column="0" x:Name="ContentPanel" BorderBrush="#FFD0CEBF" BorderThickness="0,0,0,0" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained">
+                                        <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                            <Border Background="{TemplateBinding Background}" x:Name="Border1">
+                                                <ContentPresenter DataContext="{x:Null}" Margin="{TemplateBinding Padding}" x:Name="PART_SelectedContentHost" Content="{TemplateBinding SelectedContent}" ContentTemplate="{TemplateBinding SelectedContentTemplate}" ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" ContentSource="SelectedContent"/>
+                                            </Border>
+                                        </Border>
+                                    </Border>
+                                    <ScrollViewer x:Name="HeaderPanel" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                                        <ScrollViewer.Style>
+                                            <Style TargetType="{x:Type ScrollViewer}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <Grid Margin="0,0,0,0" Grid.Row="0" Grid.Column="0" x:Name="HeaderPanel">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="25"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="25"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                </Grid.RowDefinitions>
+                                                                <RepeatButton Grid.Column="0" Content="‹" Command="ScrollBar.LineLeftCommand" Style="{DynamicResource TabScrollerRepeatButtonStyle}"/>
+                                                                <ScrollContentPresenter Grid.Column="1" Content="{TemplateBinding ScrollViewer.Content}" />
+                                                                <RepeatButton Grid.Column="2" Content="›" Command="ScrollBar.LineRightCommand" Style="{DynamicResource TabScrollerRepeatButtonStyle}"/>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ScrollViewer.Style>
+                                        <StackPanel IsItemsHost="true" Orientation="Horizontal" Background="{x:Null}" KeyboardNavigation.TabIndex="1" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </ControlTemplate>
+                        </TabControl.Resources>
+
+                        <TabItem x:Name="tab_ProcessType">
+                            <TabItem.Style>
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                                <Grid>
+                                                    <Border Name="Border">
+                                                        <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header"/>
+                                                    </Border>
+                                                    <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                                        <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Process Type" Margin="10,0,10,5" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background">
+                                                            <Setter.Value>
+                                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                                    <GradientStop Color="White" Offset="0"/>
+                                                                    <GradientStop Color="#eef6ff" Offset="1"/>
+                                                                </LinearGradientBrush>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter Property="FontSize" Value="14"/>
+
+                                                        <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3"/>
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                                    </Trigger>
+                                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                                    </Trigger>
+                                                    <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabItem.Style>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="20*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Choose Process Type" FontFamily="Calibri" FontSize="22" TextAlignment="Left" VerticalAlignment="Center" Padding="50,10,0,0" Grid.ColumnSpan="2" Grid.Row="2" Height="51" Foreground="#FF6081BB"/>
+                                <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" x:Name="toggle_PickToLight" Checked="toggle_PickToLight_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB">
+                                    <materialDesign:PackIcon Name="pick_PackIcon" Kind="Close" Foreground="#FF2572EB"/>
+                                </ToggleButton>
+
+                                <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" x:Name="toggle_PutToLight" Checked="toggle_PutToLight_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB">
+                                    <materialDesign:PackIcon Name="put_PackIcon" Kind="Close" Foreground="#FF2572EB" />
+                                </ToggleButton>
+                                <TextBlock x:Name="txtBlk_PutToLight" Text="Put To Light" Grid.Column="1" Margin="50,0,0,0" Grid.ColumnSpan="2" Grid.Row="3" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <TextBlock x:Name="txtBlk_PickToLight" Text="Pick To Light" Grid.Column="1" Margin="50,0,0,0" Grid.ColumnSpan="2" Grid.Row="4" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <TextBlock Text="Choose Application Type" FontFamily="Calibri" FontSize="22" TextAlignment="Left" Padding="50,10,0,0" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" Height="51" Foreground="#FF6081BB"/>
+                                <ComboBox Height="40" Name="comboBX_AppType" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="30,0,0,0" VerticalAlignment="Top" SelectionChanged="comboBX_AppType_SelectionChanged" SelectedIndex="0" Width="Auto">
+
+                                </ComboBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem x:Name="tab_ScanMode">
+                            <TabItem.Style>
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                                <Grid>
+                                                    <Border Name="Border">
+                                                        <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header"/>
+                                                    </Border>
+                                                    <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                                        <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Scan Mode" Margin="10,0,10,5" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="FontSize" Value="16"/>
+                                                        <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3"/>
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                                    </Trigger>
+                                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                                    </Trigger>
+                                                    <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabItem.Style>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="81*"/>
+                                    <RowDefinition Height="81*"/>
+                                    <RowDefinition Height="80*"/>
+                                    <RowDefinition Height="81*"/>
+                                    <RowDefinition Height="81*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125*"/>
+                                    <ColumnDefinition Width="44*"/>
+                                    <ColumnDefinition Width="123*"/>
+                                    <ColumnDefinition Width="125*"/>
+                                    <ColumnDefinition Width="126*"/>
+                                    <ColumnDefinition Width="83*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Choose Scan Mode" FontFamily="Calibri" FontSize="22" TextAlignment="Left" Padding="50,10,0,0" VerticalAlignment="Center" Grid.ColumnSpan="4" Grid.Column="0" Height="52" Foreground="#FF6081BB"/>
+                                <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" x:Name="toggle_OneTime" Checked="toggle_PutToLight_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB" Margin="0,10,0,9">
+                                    <materialDesign:PackIcon Name="OneTime_PackIcon" Kind="Close" Foreground="#FF2572EB" />
+                                </ToggleButton>
+                                <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" x:Name="toggle_EveryZoneScan" Checked="toggle_PutToLight_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB" Margin="0,9,0,10">
+                                    <materialDesign:PackIcon Name="EveryZoneScan_PackIcon" Kind="Close" Foreground="#FF2572EB" />
+                                </ToggleButton>
+                                <TextBlock Text="One Time Introductory Scan" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <TextBlock Text="Scan In Every Zone" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem x:Name="tab_ZoneTrigger">
+                            <TabItem.Style>
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                                <Grid>
+                                                    <Border Name="Border">
+                                                        <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header"/>
+                                                    </Border>
+                                                    <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                                        <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Zone Trigger" Margin="10,0,10,5" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="FontSize" Value="16"/>
+                                                        <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3"/>
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                                    </Trigger>
+                                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                                    </Trigger>
+                                                    <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabItem.Style>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="81*"/>
+                                    <RowDefinition Height="81*"/>
+                                    <RowDefinition Height="80*"/>
+                                    <RowDefinition Height="81*"/>
+                                    <RowDefinition Height="81*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125*"/>
+                                    <ColumnDefinition Width="47*"/>
+                                    <ColumnDefinition Width="120*"/>
+                                    <ColumnDefinition Width="125*"/>
+                                    <ColumnDefinition Width="126*"/>
+                                    <ColumnDefinition Width="83*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Choose Zone Trigger Method" FontFamily="Calibri" FontSize="22" TextAlignment="Left" Padding="50,10,0,0" VerticalAlignment="Center" Grid.ColumnSpan="4" Grid.Column="0" Height="52" Foreground="#FF6081BB"/>
+                                <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" x:Name="toggle_EveryZone" Checked="toggle_PutToLight_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB" Margin="0,10,0,9">
+                                    <materialDesign:PackIcon Name="EveryZone_PackIcon" Kind="Close" Foreground="#FF2572EB" />
+                                </ToggleButton>
+                                <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" x:Name="toggle_LastZone" Checked="toggle_PutToLight_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB" Margin="0,11,0,9">
+                                    <materialDesign:PackIcon Name="LastZone_PackIcon" Kind="Close" Foreground="#FF2572EB" />
+                                </ToggleButton>
+                                <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" x:Name="toggle_AtEntryExit" Checked="toggle_PutToLight_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB" Margin="0,10,0,9">
+                                    <materialDesign:PackIcon Name="AtEntryExit_PackIcon" Kind="Close" Foreground="#FF2572EB" />
+                                </ToggleButton>
+                                <TextBlock Text="Scan In Every Zone" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <TextBlock Text="Last Zone Confirmation" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <TextBlock Text="Button Press At Entry And Exit" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="3" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem x:Name="tab_Ptl_type">
+                            <TabItem.Style>
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                                <Grid>
+                                                    <Border Name="Border">
+                                                        <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header"/>
+                                                    </Border>
+                                                    <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                                        <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="PTL Type" Margin="10,0,10,5" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="FontSize" Value="16"/>
+                                                        <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3"/>
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                                    </Trigger>
+                                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                                    </Trigger>
+                                                    <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabItem.Style>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="10*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="7*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="25*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="20*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Choose Type Of PTL" FontFamily="Calibri" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" FontSize="22" TextAlignment="Left" Padding="50,0,0,0" VerticalAlignment="Center" Foreground="#FF6081BB"/>
+                                <ToggleButton Name="toggle_WithPlusMinus" Grid.Row="3" Grid.Column="0" Checked="toggle_WithPlusMinus_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF4082EC">
+                                    <materialDesign:PackIcon Name="packIcon_WithPlusMinus" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <ToggleButton Name="toggle_WithoutPlusMinus" Grid.Row="4" Grid.Column="0" Checked="toggle_WithoutPlusMinus_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF4082EC">
+                                    <materialDesign:PackIcon Name="packIcon_WithoutPlusMinus" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Grid.Row="3" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Center"  Grid.Column="1" Text="With +/-"/>
+                                <TextBlock Grid.Row="4" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Center" Grid.Column="1" Text="Without +/-"/>
+                                <TextBlock Text="As Per Light Color" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" FontSize="18" TextAlignment="Left" Padding="50,0,0,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="As Per Button" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" FontSize="18" VerticalAlignment="Center" TextAlignment="Left" Padding="50,0,0,0"/>
+                                <ToggleButton IsEnabled="False" Name="toggle_RBGlight" Grid.Row="7" Grid.Column="0" Style="{StaticResource MaterialDesignActionToggleButton}">
+                                    <materialDesign:PackIcon Kind="Close"/>
+                                </ToggleButton>
+                                <TextBlock TextWrapping="Wrap" Text="Single RBG Light" Grid.ColumnSpan="2" Grid.Row="7" Grid.Column="1" FontSize="15" TextAlignment="Left" VerticalAlignment="Center" IsEnabled="False"/>
+                                <TextBlock Text="As per Light Blinking" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" FontSize="18" Padding="50,0,0,0" TextAlignment="Left" VerticalAlignment="Center"/>
+                                <ToggleButton Name="toggle_SteadyGlow" Grid.Row="3" Grid.Column="3" Checked="toggle_SteadyGlow_Checked" Background="#FF4082EC" Style="{StaticResource MaterialDesignActionToggleButton}">
+                                    <materialDesign:PackIcon Name="packIcon_SteadyGlow" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Text="Steady Glow" Grid.Column="4" Grid.Row="3" FontSize="15" TextAlignment="Left" VerticalAlignment="Center"/>
+                                <ToggleButton Name="toggle_BlinkingMode" Grid.Row="4" Grid.Column="3" Checked="toggle_BlinkingMode_Checked" Background="#FF4082EC" Style="{StaticResource MaterialDesignActionToggleButton}">
+                                    <materialDesign:PackIcon Name="packIcon_BlinkingMode" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Text="Blinking Mode" Grid.Row="4" Grid.Column="4" FontSize="15" VerticalAlignment="Center" TextAlignment="Left"/>
+                                <TextBlock Text="As Per Display" FontSize="18" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" TextWrapping="Wrap" TextAlignment="Left" Padding="50,0,0,0" VerticalAlignment="Center"/>
+                                <ToggleButton Name="toggle_NumericDisplay" Grid.Row="7" Grid.Column="3" Checked="toggle_NumericDisplay_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF4082EC">
+                                    <materialDesign:PackIcon Name="packIcon_Numeric" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Text="Numeric" Grid.Row="7" Grid.Column="4" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left"/>
+                                <TextBlock Text="Alpha Numeric" Grid.Row="8" Grid.Column="4" HorizontalAlignment="Left" TextAlignment="Left" VerticalAlignment="Center" FontSize="15"/>
+                                <ToggleButton Name="toggle_AlphaNuericDisplay" Grid.Row="8" Grid.Column="3" Checked="toggle_AlphaNumericDisplay_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF4082EC" Click="toggle_AlphaNuericDisplay_Click">
+                                    <materialDesign:PackIcon Name="packIcon_AlphaNumeric" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                            </Grid>
+                        </TabItem>
+                        <TabItem x:Name="tab_Pick_ConfirmationTyp" Visibility="Collapsed">
+                            <TabItem.Style>
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                                <Grid>
+                                                    <Border Name="Border">
+                                                        <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header"/>
+                                                    </Border>
+                                                    <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                                        <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Pick Cofirmation" Margin="10,0,10,5" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="FontSize" Value="16"/>
+                                                        <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3"/>
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                                    </Trigger>
+                                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                                    </Trigger>
+                                                    <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabItem.Style>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="156*"/>
+                                    <ColumnDefinition Width="49*"/>
+                                    <ColumnDefinition Width="264*"/>
+                                    <ColumnDefinition Width="157*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Select Pick Comfirmation Type" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontSize="22" TextAlignment="Left" Padding="50,0,0,0" VerticalAlignment="Center" Foreground="#FF6081BB" Height="29"/>
+                                <ToggleButton Name="toggle_No_Scan_and_Button_Press" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="toggle_No_Scan_and_Button_Press_Checked" Background="#FF4082EC" Style="{StaticResource MaterialDesignActionToggleButton}" Margin="0,17,0,18">
+                                    <materialDesign:PackIcon Name="packIcon_No_Scan_and_Button_Press" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Text="No Scan and Button Press" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" FontSize="18" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" Height="24"/>
+                                <ToggleButton Name="toggle_Some_Scan_No_Button_Press" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="toggle_Some_Scan_No_Button_Press_Checked" Background="#FF4082EC" Style="{StaticResource MaterialDesignActionToggleButton}" Margin="0,18">
+                                    <materialDesign:PackIcon Name="packIcon_Some_Scan_No_Button_Press" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Grid.ColumnSpan="2" Text="Some Scan But No Button Press" Grid.Row="2" Grid.Column="2" FontSize="18" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" Height="24"/>
+                                <ToggleButton Name="toggle_Button_Press" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Checked="toggle_Button_Press_Checked" Background="#FF4082EC" Style="{StaticResource MaterialDesignActionToggleButton}" Margin="0,18">
+                                    <materialDesign:PackIcon Name="packIcon_Button_Press" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Grid.ColumnSpan="2" Text="Some Scan Some Button Press" Grid.Row="3" Grid.Column="2" FontSize="18" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" Height="24"/>
+                                <ToggleButton Name="toggle_SomeScanSomeButtonPress" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"  Checked="toggle_Button_Press_Checked" Background="#FF4082EC" Style="{StaticResource MaterialDesignActionToggleButton}" Margin="0,18,0,17">
+                                    <materialDesign:PackIcon Name="packIcon_SomeScanSomeButtonPress" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Grid.ColumnSpan="2" Text="Button Press" Grid.Row="4" Grid.Column="2" FontSize="18" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" Height="24"/>
+
+
+                            </Grid>
+                        </TabItem>
+                        <TabItem x:Name="tab_Put_ConfirmationTyp" Visibility="Collapsed">
+                            <TabItem.Style>
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                                <Grid>
+                                                    <Border Name="Border">
+                                                        <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header"/>
+                                                    </Border>
+                                                    <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                                        <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Put Cofirmation" Margin="10,0,10,5" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="FontSize" Value="16"/>
+                                                        <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3"/>
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                                    </Trigger>
+                                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                                    </Trigger>
+                                                    <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabItem.Style>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="156*"/>
+                                    <ColumnDefinition Width="49*"/>
+                                    <ColumnDefinition Width="264*"/>
+                                    <ColumnDefinition Width="157*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Select Put Comfirmation Type" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontSize="22" TextAlignment="Left" Padding="50,0,0,0" VerticalAlignment="Center" Foreground="#FF6081BB" Height="29" Margin="0,19"/>
+                                <ToggleButton Name="toggle_SingleScan" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="toggle_No_Scan_and_Button_Press_Checked" Background="#FF4082EC" Style="{StaticResource MaterialDesignActionToggleButton}" Margin="0,17,0,18">
+                                    <materialDesign:PackIcon Name="packIcon_SingleScan" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <ToggleButton Name="toggle_NextScan" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="toggle_No_Scan_and_Button_Press_Checked" Background="#FF4082EC" Style="{StaticResource MaterialDesignActionToggleButton}" Margin="0,17,0,18">
+                                    <materialDesign:PackIcon Name="packIcon_NextScan" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <ToggleButton Name="toggle_ButtonScan" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="toggle_No_Scan_and_Button_Press_Checked" Background="#FF4082EC" Style="{StaticResource MaterialDesignActionToggleButton}" Margin="0,17,0,18">
+                                    <materialDesign:PackIcon Name="packIcon_ButtonScan" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Text="Single Scan" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" FontSize="18" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" Height="24"/>
+                                <TextBlock Text="Next Scan" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" FontSize="18" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" Height="24"/>
+                                <TextBlock Text="Button Scan" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" FontSize="18" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center" Height="24"/>
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem x:Name="tab_PTL_Mapping_Type">
+                            <TabItem.Style>
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                                <Grid>
+                                                    <Border Name="Border">
+                                                        <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header"/>
+                                                    </Border>
+                                                    <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                                        <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Mapping type" Margin="10,0,10,5" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="FontSize" Value="16"/>
+                                                        <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3"/>
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                                    </Trigger>
+                                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                                    </Trigger>
+                                                    <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabItem.Style>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="PTL Location Mapping Type (PHYSICAL)" TextWrapping="Wrap" FontSize="22" TextAlignment="Left" Padding="50,0,0,0" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Foreground="#FF6081BB"/>
+                                <ToggleButton Name="toggle_OneToOne" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="toggle_OneToOne_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF4082EC">
+                                    <materialDesign:PackIcon Name="packIcon_OneToOne" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Grid.Row="1" Grid.Column="2" Text="1 TO 1" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="18"/>
+                                <ToggleButton Name="toggle_OneToMany" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="toggle_OneToMany_Checked" Background="#FF4082EC" Style="{StaticResource MaterialDesignActionToggleButton}">
+                                    <materialDesign:PackIcon Name="packIcon_1ToMany" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Text="1 To Many" Grid.Row="2" Grid.Column="2" FontSize="18" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem x:Name="tab_Barcode">
+                            <TabItem.Style>
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                                <Grid>
+                                                    <Border Name="Border">
+                                                        <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header"/>
+                                                    </Border>
+                                                    <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                                        <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Barcode" Margin="10,0,10,5" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="FontSize" Value="16"/>
+                                                        <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3"/>
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                                    </Trigger>
+                                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                                    </Trigger>
+                                                    <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabItem.Style>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Do You Want Hand Held Barcode Scanner?" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontSize="22" TextWrapping="Wrap" TextAlignment="Left" Padding="50,0,0,0" VerticalAlignment="Center" Foreground="#FF6081BB"/>
+                                <ToggleButton Name="toggle_YesScanner" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="toggle_YesScanner_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF4082EC">
+                                    <materialDesign:PackIcon Name="packIcon_YesScanner" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" TextAlignment="Left" TextWrapping="Wrap" Text="YES" VerticalAlignment="Center" FontSize="18"/>
+                                <ToggleButton Name="toggle_NoScanner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="toggle_NoScanner_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF4082EC">
+                                    <materialDesign:PackIcon Name="packIcon_NoScanner" Kind="Close" Foreground="#FF4082EC"/>
+                                </ToggleButton>
+                                <TextBlock Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" TextAlignment="Left" TextWrapping="Wrap" Text="NO" VerticalAlignment="Center" FontSize="18"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem x:Name="tab_PTLOperationMode" VerticalAlignment="Top">
+                            <TabItem.Style>
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                                <Grid>
+                                                    <Border Name="Border">
+                                                        <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header"/>
+                                                    </Border>
+                                                    <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                                        <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="PTL Operation Mode" Margin="10,0,10,5" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="FontSize" Value="16"/>
+                                                        <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3"/>
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                                    </Trigger>
+                                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                                    </Trigger>
+                                                    <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabItem.Style>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="156*"/>
+                                    <ColumnDefinition Width="62*"/>
+                                    <ColumnDefinition Width="95*"/>
+                                    <ColumnDefinition Width="156*"/>
+                                    <ColumnDefinition Width="157*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Which PTL Operation Mode Would You Like?" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" FontSize="22" TextAlignment="Left" Padding="40,0,0,0" VerticalAlignment="Center" Foreground="#FF6081BB" Margin="0,19"/>
+                                <ToggleButton  Name="toggle_loginEnable" Margin="10,17,0,18" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Checked="toggle_loginEnable_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB" BorderBrush="#FF2572EB">
+                                    <materialDesign:PackIcon Name="packIcon_loginEnable" Kind="Close" Foreground="#FF2572EB"/>
+                                </ToggleButton>
+                                <ToggleButton Name="toggle_loginDisable" Margin="10,18,0,18" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Checked="toggle_loginDisable_Checked" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB" BorderBrush="#FF2572EB">
+                                    <materialDesign:PackIcon Name="packIicon_loginDisable" Kind="Close" Foreground="#FF2572EB"/>
+                                </ToggleButton>
+                                <TextBlock Text="Login ENABLED" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" TextWrapping="Wrap" />
+                                <TextBlock Text="Login DISABLED" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" TextWrapping="Wrap" />
+                                <TextBlock Text="Zone MASTER-SLAVE Configuration" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" FontSize="22" TextAlignment="Left" Padding="40,0,0,0" VerticalAlignment="Center" Foreground="#FF6081BB" Margin="0,19"/>
+                                <ToggleButton Name="toggle_MasterSlave" Margin="10,18,0,18" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignActionToggleButton}" Background="#FF2572EB" BorderBrush="#FF2572EB" Checked="toggle_MasterSlave_Checked">
+                                    <materialDesign:PackIcon Name="packIicon_MasterSlave" Kind="Close" Foreground="White"/>
+                                </ToggleButton>
+                                <TextBlock Text="Allowed"  Name="textBlock_Allowed" Grid.Row="4" Grid.Column="2" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" TextWrapping="Wrap" Visibility="{Binding IsChecked, ElementName=toggle_MasterSlave, Converter={StaticResource BooleanToVisibilityConverter}}" IsVisibleChanged="textBlock_Allowed_IsVisibleChanged"/>
+                                <TextBlock Text="Not Allowed" Name="textBlock_notAllowed" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" TextWrapping="Wrap" IsVisibleChanged="textBlock_notAllowed_IsVisibleChanged"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+
+
+            <TabItem x:Name="tab_ExcelUplaod" VerticalAlignment="Top">
+                <TabItem.Style>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="VerticalAlignment" Value="Bottom"/>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TabItem}">
+                                    <Grid>
+                                        <Border Name="Border">
+                                            <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header" Margin="12,2,12,2"/>
+                                        </Border>
+                                        <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                            <Image Name="image" Source="images/excelIcon.png" Width="22" Height="22" Stretch="Fill" Margin="7,0,0,0"/>
+                                            <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Excel Uplaod" Margin="7,0,0,0" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Visible"/>
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter TargetName="Border" Property="BorderThickness" Value="3,0,0,0"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter Property="FontSize" Value="13"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Hidden"/>
+                                            <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                        </Trigger>
+                                        <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                        </Trigger>
+                                        <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabItem.Style>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="30*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="#9db6d2" BorderThickness="1,0,0,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="6"></Border>
+                    <Button Name="btn_browse" Content="Browse" Click="btn_browse_Click" Background="Transparent" Foreground="Black" Grid.Column="1" HorizontalAlignment="Center"/>
+                    <DataGrid IsReadOnly="False" HorizontalAlignment="Center" Name="dtGrid" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="2" Margin="50,0,50,0" AutoGeneratingColumn="dtGrid_AutoGeneratingColumn">
+                        <DataGrid.Resources>
+                            <DataTemplate x:Key="ImgCell">
+                                <Image Source="{Binding Path=Img}"/>
+                            </DataTemplate>
+                        </DataGrid.Resources>
+                    </DataGrid>
+                    <TextBox Height="30" Name="txtFilePath" Width="Auto" FontSize="15" Opacity="1" Grid.Row="0" Grid.Column="2"/>
+                    <Button Name="btn_update" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Content="Update" Click="btn_update_Click" Background="Transparent" Foreground="Black"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="tab_Intergration" VerticalAlignment="Top">
+                <TabItem.Style>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="VerticalAlignment" Value="Bottom"/>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TabItem}">
+                                    <Grid>
+                                        <Border Name="Border">
+                                            <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header" Margin="12,2,12,2"/>
+                                        </Border>
+                                        <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                            <Image Name="image" Source="images/map.png" Width="22" Height="22" Stretch="Fill" Margin="7,0,0,0"/>
+                                            <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Intergration" Margin="7,0,0,0" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Visible"/>
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter TargetName="Border" Property="BorderThickness" Value="3,0,0,0"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                            <Setter Property="Height" Value="50"/>
+                                            <Setter Property="FontSize" Value="13"/>
+                                            <Setter TargetName="image" Property="Visibility" Value="Hidden"/>
+                                            <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                        </Trigger>
+                                        <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                        </Trigger>
+                                        <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabItem.Style>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="30*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                    </Grid.ColumnDefinitions>
+                    <TabControl Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Grid.RowSpan="4" Loaded="TabControl_Loaded" BorderThickness="0">
+                        
+                        <TabItem>
+                            <TabItem.Style>
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                                <Grid>
+                                                    <Border Name="Border">
+                                                        <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header"/>
+                                                    </Border>
+                                                    <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                                        <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Source of Integration" Margin="10,0,10,5" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="FontSize" Value="14"/>
+
+                                                        <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3"/>
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                                    </Trigger>
+                                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                                    </Trigger>
+                                                    <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabItem.Style>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border BorderBrush="#9db6d2" BorderThickness="1,0,0,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4"></Border>
+                                <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Choose Source of Integration" VerticalAlignment="Center"/>
+                                <ComboBox Name="ComboBox_DBtype" Grid.Column="2" VerticalAlignment="Center" Grid.ColumnSpan="1" Margin="10,0,0,0" SelectionChanged="ComboBox_DBtype_SelectionChanged"></ComboBox>
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem>
+                            <TabItem.Style>
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                                <Grid>
+                                                    <Border Name="Border">
+                                                        <ContentPresenter x:Name="TitleContent" VerticalAlignment="Center" HorizontalAlignment="Left" ContentSource="Header"/>
+                                                    </Border>
+                                                    <StackPanel Orientation="Horizontal" Name="St_Panel">
+                                                        <TextBlock Name="Txt_blk" TextAlignment="Left" VerticalAlignment="Center" Text="Client-Destination Mapping" Margin="10,0,10,5" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="FontSize" Value="14"/>
+
+                                                        <Setter TargetName="Txt_blk" Property="TextElement.Foreground" Value="#2572EB"/>
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3"/>
+                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#2572EB"/>
+
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                        <Setter Property="Height" Value="30"/>
+                                                        <Setter Property="FontSize" Value="13"/>
+                                                        <Setter TargetName="Txt_blk" Property="Foreground" Value="#808080"/>
+                                                        <!--<Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Gray"/>-->
+                                                    </Trigger>
+                                                    <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+
+                                                    </Trigger>
+                                                    <Trigger SourceName="St_Panel" Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabItem.Style>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="30*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="15*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border BorderBrush="#9db6d2" BorderThickness="1,0,0,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5"></Border>
+                                <ComboBox Height="40" Name="ComboBox_clientTable" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="1"  VerticalAlignment="Center" SelectedIndex="0"/>
+                                <ComboBox Height="40" Name="ComboBox_destinationTable" Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="1" VerticalAlignment="Center" SelectionChanged="ComboBox_destinationTable_SelectionChanged"/>
+                                <TextBlock Text="Select Client Table" VerticalAlignment="Center" TextWrapping="Wrap" Grid.Column="1"/>
+                                <TextBlock Text="Select Destination Table" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                <TextBlock Text="CLIENT - DESTINATION COLUMN MAPPING" FontFamily="Calibri" FontSize="22" TextAlignment="Left" VerticalAlignment="Center" Padding="50,10,0,0" Grid.ColumnSpan="8" Height="52" Foreground="#FF6081BB" Grid.Row="1"/>
+                                <DataGrid Name="datagrid_Mapping" Grid.ColumnSpan="7" Grid.RowSpan="3" Grid.Row="2" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" >
+                                     
+                                    
+                                        <DataGrid.Columns>
+                                        <DataGridTextColumn x:Name="Col_Client" Binding="{Binding client_col}" Header="Client" />
+                                        <DataGridTemplateColumn Header="Destination" Width="200">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <ComboBox ItemsSource="{Binding destination_col}" SelectionChanged="ComboBox_SelectionChanged" Opacity="1" >
+                                                        <ComboBox.Resources>
+                                                            <ResourceDictionary>
+                                                                <ResourceDictionary.MergedDictionaries>
+                                                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                                                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                                                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                                                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                                                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                                                                </ResourceDictionary.MergedDictionaries>
+                                                            </ResourceDictionary>
+                                                        </ComboBox.Resources>
+                                                    </ComboBox>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </TabItem>
+
+                    </TabControl>
+                </Grid>
+            </TabItem>
+
+        </Mahapps:MetroAnimatedSingleRowTabControl>
+
+        <Button Content="NEXT  ›" Name="btn_Next" Grid.Column="3" FontSize="18" Grid.ColumnSpan="2" Grid.Row="6" VerticalAlignment="Top" Background="Transparent" Margin="0,10,0,0" Width="120" BorderBrush="Transparent" Foreground="#FF0A3E36" Height="42" Click="Button_Click_1"/>
+        <Button BorderBrush="Transparent" Background="Transparent" Foreground="White" FontSize="20" Content="×" Grid.Column="5" Grid.Row="0" Margin="0,0,0,0" Height="30" Padding="0,0,0,10" VerticalAlignment="Center" HorizontalAlignment="Right" Loaded="Button_Loaded" Click="closeButton" Width="45"/>
+        <Button BorderBrush="Transparent" Background="Transparent" Foreground="White" FontSize="20" Content="-" Grid.Column="5" Grid.Row="0" Margin="0,0,50,0" Height="30" Padding="0,0,0,10" VerticalAlignment="Center" HorizontalAlignment="Right" Loaded="Button_Loaded" Width="25" Click="minimizeButton"/>
+        <Button Content="‹  BACK " Grid.Column="2" FontSize="18" Grid.ColumnSpan="2" Grid.Row="6" VerticalAlignment="Top" Background="Transparent" Margin="0,10,0,0" Width="120" BorderBrush="Transparent" Foreground="#FF0A3E36" Height="42" Name="btn_Back" Click="btn_Back_Click"/>
+
+        <Grid Name="Grid_ClientDetails" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="5" Loaded="Grid_ClientDetails_Loaded" Visibility="Hidden">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#99FFFFFF" Offset="1"/>
+                    <GradientStop Color="#99F0F0F0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="30*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="84*"/>
+                <ColumnDefinition Width="58*"/>
+                <ColumnDefinition Width="71*"/>
+                <ColumnDefinition Width="71*"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Grid.Row="0" BorderBrush="#9db6d2" BorderThickness="0,0,0,1.5" Grid.ColumnSpan="4"/>
+            <TextBlock Text="Search by customer name" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14.5"/>
+            <TextBox Name="textBox_searchCustomer" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" TextChanged="textBox_searchCustomer_TextChanged" VerticalAlignment="Center"/>
+            <ListBox Name="itemsControl_ViewCustomers" ItemsSource="{Binding}" Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="0" Grid.RowSpan="6">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid MinWidth="660" Width="Auto" Height="150" MaxHeight="1000">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20*"/>
+                                <RowDefinition Height="20*"/>
+                                <RowDefinition Height="20*"/>
+                                <RowDefinition Height="20*"/>
+                                <RowDefinition Height="20*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="30*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="30*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Grid.Row="5" BorderBrush="#9db6d2" BorderThickness="0,0,0,1" Grid.ColumnSpan="6"/>
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Customer_name}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Left" TextAlignment="Left" Foreground="#0078d7" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Tool_no}" FontSize="14" FontWeight="DemiBold" HorizontalAlignment="Left" TextAlignment="Left" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="2" Grid.Column="2" TextWrapping="Wrap" HorizontalAlignment="Left">
+                                <TextBlock.Text>
+                                    <Binding StringFormat="Address: {0}" Path="Site_address"/>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding process_type}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Left" TextAlignment="Left" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="1" Grid.Column="3" FontSize="14" TextWrapping="Wrap">
+                                <TextBlock.Text>
+                                    <Binding StringFormat="Total Zones = {0}" Path="total_zones"/>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="3" FontSize="14" TextWrapping="Wrap">
+                                <TextBlock.Text>
+                                    <Binding StringFormat="Total PTL = {0}" Path="total_PTL"/>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="3" FontSize="14" TextWrapping="Wrap">
+                                <TextBlock.Text>
+                                    <Binding StringFormat="Max Number of PTL = {0}" Path="max_PTL"/>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="3" FontSize="14" TextWrapping="Wrap">
+                                <TextBlock.Text>
+                                    <Binding StringFormat="HHT = {0}" Path="HHT"/>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <Image Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Source="{Binding img_path}" />
+                            <Button Name="btn_EditCustomer" Content="Edit" Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" />
+                            <Button Name="btn_ManageConfig" Content="Manage Config" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="1" VerticalAlignment="Center" Padding="0"/>
+                            <Button Name="btn_DownloadXML" Content="Download XML" Grid.Row="3" Grid.Column="5" Grid.ColumnSpan="1" VerticalAlignment="Center" Padding="0"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Name="btn_close_AddGrid" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Foreground="LightCoral" FontSize="20" Content="×" ToolTip="Close this window" Click="btn_close_AddGrid_Click"/>
+        </Grid>
+
+        <Button Name="btn_additional_details" Grid.Row="2" Grid.Column="4" Content="View Customers" HorizontalAlignment="Right" Grid.RowSpan="2" FontSize="12" Click="btn_additional_details_Click">
+            <Button.LayoutTransform>
+                <RotateTransform Angle="-90"/>
+            </Button.LayoutTransform>
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="MinHeight" Value="25" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="FontSize" Value="10" />
+                    <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
+                    <Setter Property="Background" Value="LightBlue" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                    <Setter Property="Padding" Value="5,6" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="MouseOver">
+                                                <Storyboard>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MouseOverBorder">
+                                                        <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Pressed">
+                                                <Storyboard>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PressedBorder">
+                                                        <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Disabled">
+                                                <Storyboard>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="DisabledVisualElement">
+                                                        <SplineDoubleKeyFrame KeyTime="0" Value="0.7" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="contentPresenter">
+                                                        <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                        <VisualStateGroup x:Name="FocusStates">
+                                            <VisualState x:Name="Focused">
+                                                <Storyboard>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="FocusRectangle">
+                                                        <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="FocusInnerRectangle">
+                                                        <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="Unfocused" />
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <Border x:Name="Background"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="#F2EAED"
+                                CornerRadius="3" />
+                                    <Rectangle x:Name="DisabledVisualElement"
+                                   Fill="{DynamicResource ControlsDisabledBrush}"
+                                   IsHitTestVisible="false"
+                                   Opacity="0"
+                                   RadiusY="3"
+                                   RadiusX="3" />
+                                    <Border x:Name="MouseOverBorder"
+                                Background="LightBlue"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="White"
+                                CornerRadius="3.5"
+                                Opacity="0" Margin="0,0,0,-1" />
+                                    <Border x:Name="PressedBorder"
+                                Background="Transparent"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3.5"
+                                Opacity="0" />
+                                    <Rectangle x:Name="FocusRectangle"
+                                   Stroke="Transparent"
+                                   RadiusY="4"
+                                   RadiusX="4"
+                                   Margin="-1"
+                                   Opacity="0" />
+                                    <Rectangle x:Name="FocusInnerRectangle"
+                                   StrokeThickness="1"
+                                   Stroke="#FF4E93A8"
+                                   RadiusX="3"
+                                   RadiusY="3"
+                                   Opacity="0" />
+                                    <ContentPresenter x:Name="contentPresenter"
+                                          RecognizesAccessKey="True"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
+</Window>
